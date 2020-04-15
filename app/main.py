@@ -1,16 +1,12 @@
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
+from fastapi import FastAPI, HTTPException, Request
+# from mangum import Mangum
 
+from schemas import TIN
 from customize import fastapi_title
 from validateCodeIT import validateCodeIT
 from validateTinES import validateTinES
 
 app = FastAPI(title=fastapi_title)
-
-class TIN(BaseModel):
-    countryCode: str
-    tin: str
-    foreigner: bool = None
 
 # Return a Cache-Control header for all requests.
 # The no-cache directive disables caching on the zeit CDN.
@@ -21,7 +17,7 @@ async def add_no_cache_header(request: Request, call_next):
     response = await call_next(request)
     response.headers["Cache-Control"] = "no-cache"
     return response
-    
+
 @app.get("/")
 async def welcome():
     return "Welcome to European Customs and Taxation API"
@@ -49,3 +45,6 @@ def checkCountry(countryCode):
                             'errorMessage': 'Invalid Country'
                             }
                         )
+
+
+# handler = Mangum(app, enable_lifespan=False)
