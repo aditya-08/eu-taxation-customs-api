@@ -4,7 +4,7 @@ import sqlite3
 def validateTinES(input,foreigner):
     print(foreigner)
     # checkC9(input)
-    if foreigner == True:
+    if foreigner == True or not input[0].isdigit():
         checkPositionF(input)
         checkC1F(input[0])
         checkDigitESF(input)
