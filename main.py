@@ -1,10 +1,10 @@
 from fastapi import FastAPI, HTTPException, Request
 # from mangum import Mangum
 
-from schemas import TIN
-from customize import fastapi_title
-from validateCodeIT import validateCodeIT
-from validateTinES import validateTinES
+from app.schemas import TIN
+from app.customize import fastapi_title
+from app.validateCodeIT import validateCodeIT
+from app.validateTinES import validateTinES
 
 app = FastAPI(title=fastapi_title)
 
