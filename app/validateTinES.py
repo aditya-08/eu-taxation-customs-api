@@ -2,7 +2,7 @@ from fastapi import HTTPException
 import sqlite3
 
 def validateTinES(input,foreigner):
-    print(foreigner)
+    # print(foreigner)
     # checkC9(input)
     if foreigner == True or not input[0].isdigit():
         checkPositionF(input)
@@ -235,11 +235,11 @@ def checkDigitESF(input):
     replaced = replaced.replace('M','0')
 
     mod23 = (int(replaced[0:8]) % 23) + 1
-    print(mod23)
+    # print(mod23)
     m = (mod23,)
     res = c.execute('SELECT checkDigit from RefDigitES WHERE dig=?', m).fetchone()[0]
-    print(res)
-    print(input[8])
+    # print(res)
+    # print(input[8])
 
     if res == input[8]:
         return True

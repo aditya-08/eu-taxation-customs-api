@@ -9,7 +9,7 @@ with open ('checkDigitIT.csv', 'r') as f:
     columns = next(reader)
     columns = [h.strip() for h in columns]
     if first:
-        cursor.execute('DROP TABLE CheckDigitIT')
+        # cursor.execute('DROP TABLE CheckDigitIT')
         sql = 'CREATE TABLE CheckDigitIT (%s)' % ', '.join(['%s text'%column for column in columns])
         # print (sql)
         cursor.execute(sql)
