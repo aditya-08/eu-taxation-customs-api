@@ -1,5 +1,5 @@
 from fastapi import FastAPI, HTTPException, Request
-from pydantic import BaseModel
+# from pydantic import BaseModel
 
 from app.schemas import TIN
 from app.customize import fastapi_title, fastapi_description, fastapi_version
@@ -32,11 +32,11 @@ from app.validateBG import validateBG
 from app.validateBE import validateBE
 from app.validateAT import validateAT
 
-class TinBase(BaseModel):
-    tinNumber: str
-    validStructure: bool
-    validSyntax: bool
-    countryCode: str
+# class TinBase(BaseModel):
+#     tinNumber: str
+#     validStructure: bool
+#     validSyntax: bool
+#     countryCode: str
 
 app = FastAPI(
     title=fastapi_title,
@@ -56,7 +56,7 @@ async def welcome():
         "message": "EU TAX API"
         })
 
-@app.get("/tin/validate",response_model=TinBase)
+@app.get("/tin/validate")
 async def validate_TIN(countryCode: str, tinNumber: str):
     """
     Validates structure and syntax of Tax Identity Number
@@ -165,6 +165,3 @@ def checkCountry(countryCode):
                             'countryCode': countryCode
                             }
                         )
-
-
-# handler = Mangum(app, enable_lifespan=False)
