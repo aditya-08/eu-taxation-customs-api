@@ -1,104 +1,100 @@
 from fastapi import HTTPException
 import sqlite3
 
-def validateTinES(input,foreigner):
-    # print(foreigner)
-    # checkC9(input)
-    if foreigner == True or not input[0].isdigit():
-        checkPositionF(input)
-        checkC1F(input[0])
-        checkDigitESF(input)
-        return True
+def validateTinES(input):
+    if not input[0].isdigit():
+        result = checkPositionF(input)
+        if not result["validStructure"]:
+            return result
+        result = checkDigitESF(input)
+        if not result["validSyntax"]:
+            return result
+        
     else:
-        checkPosition(input)
-        checkDigitES(input)
-        return True
+        result = checkPosition(input)
+        if not result["validStructure"]:
+            return result
+        result = checkDigitES(input)
+        if not result["validSyntax"]:
+            return result
+        
+    return({
+            "tinNumber": input, 
+            "validStructure": True, 
+            "validSyntax": True            
+            })
 
-def checkC9(input):
-    if not input[8].isalpha():
-        raise HTTPException(status_code=400, 
-                        detail={
-                            'errorCode':301, 
-                            'errorMessage': '9th character must be a letter',
-                            'tin': input
-                            }
-                        )
 
 def checkPosition(input):
     if not input[0].isdigit():
-        raise HTTPException(status_code=400, 
-                        detail={
-                            'errorCode':202, 
-                            'errorMessage': '1st character must be a numeric',
-                            'tin': input
-                            }
-                        )
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": '1st character must be a numeric'
+            })
     if not input[1].isdigit():
-        raise HTTPException(status_code=400, 
-                        detail={
-                            'errorCode':203, 
-                            'errorMessage': '2nd character must be a numeric',
-                            'tin': input
-                            }
-                        )
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": '2nd character must be a numeric'
+            })
     if not input[2].isdigit():
-        raise HTTPException(status_code=400, 
-                        detail={
-                            'errorCode':204, 
-                            'errorMessage': '3rd character must be a numeric',
-                            'tin': input
-                            }
-                        )
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": '3rd character must be a numeric'
+            })
     if not input[3].isdigit():
-        raise HTTPException(status_code=400, 
-                        detail={
-                            'errorCode':205, 
-                            'errorMessage': '4th character must be a numeric',
-                            'tin': input
-                            }
-                        )
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": '4th character must be a numeric'
+            })
     if not input[4].isdigit():
-        raise HTTPException(status_code=400, 
-                        detail={
-                            'errorCode':206, 
-                            'errorMessage': '5th character must be a numeric',
-                            'tin': input
-                            }
-                        )
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": '5th character must be a numeric'
+            })
     if not input[5].isdigit():
-        raise HTTPException(status_code=400, 
-                        detail={
-                            'errorCode':207, 
-                            'errorMessage': '6th character must be a numeric',
-                            'tin': input
-                            }
-                        )
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": '6th character must be a numeric'
+            })
     if not input[6].isdigit():
-        raise HTTPException(status_code=400, 
-                        detail={
-                            'errorCode':208, 
-                            'errorMessage': '7th character must be a numeric',
-                            'tin': input
-                            }
-                        )
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": '7th character must be a numeric'
+            })
     if not input[7].isdigit():
-        raise HTTPException(status_code=400, 
-                        detail={
-                            'errorCode':209, 
-                            'errorMessage': '8th character must be a numeric',
-                            'tin': input
-                            }
-                        )
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": '8th character must be a numeric'
+            })
     if not input[8].isalpha():
-        raise HTTPException(status_code=400, 
-                        detail={
-                            'errorCode':301, 
-                            'errorMessage': '9th character must be a letter',
-                            'tin': input
-                            }
-                        )
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": '9th character must be a letter'
+            })
      
-    return True 
+    return({
+            "tinNumber": input, 
+            "validStructure": True, 
+            "validSyntax": False,
+            }) 
 
 def checkDigitES(input):
     conn = sqlite3.connect('spain.db')
@@ -111,99 +107,96 @@ def checkDigitES(input):
     res = c.execute('SELECT checkDigit from RefDigitES WHERE dig=?', m)
 
     if res.fetchone()[0] == input[8]:
-        return True
+        return({
+            "tinNumber": input, 
+            "validStructure": True, 
+            "validSyntax": True,
+            })
     else:
-        raise HTTPException(status_code=400, 
-                            detail={
-                            'errorCode':301, 
-                            'errorMessage': 'Check Digit - failed',
-                            'tin': input
-                            }
-                        ) 
+        return({
+            "tinNumber": input, 
+            "validStructure": True, 
+            "validSyntax": False,
+            "message": 'Invalid Check Digit'
+            }) 
 
 def checkPositionF(input):
     if not len(input) == 9:
-        raise HTTPException(status_code=400, 
-                        detail={
-                            'errorCode':202, 
-                            'errorMessage': 'Incorrect Length',
-                            'tin': input
-                            }
-                        )
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": 'Incorrect Length'
+            })
     if not input[0].isalpha():
-        raise HTTPException(status_code=400, 
-                        detail={
-                            'errorCode':202, 
-                            'errorMessage': '1st character must be a letter',
-                            'tin': input
-                            }
-                        )
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": '1st character must be a letter'
+            })
     if not input[1].isdigit():
-        raise HTTPException(status_code=400, 
-                        detail={
-                            'errorCode':203, 
-                            'errorMessage': '2nd character must be a numeric',
-                            'tin': input
-                            }
-                        )
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": 'Incorrect Length'
+            })
     if not input[2].isdigit():
-        raise HTTPException(status_code=400, 
-                        detail={
-                            'errorCode':204, 
-                            'errorMessage': '3rd character must be a numeric',
-                            'tin': input
-                            }
-                        )
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": '3rd character must be a numeric'
+            })
     if not input[3].isdigit():
-        raise HTTPException(status_code=400, 
-                        detail={
-                            'errorCode':205, 
-                            'errorMessage': '4th character must be a numeric',
-                            'tin': input
-                            }
-                        )
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": '4th character must be a numeric'
+            })
     if not input[4].isdigit():
-        raise HTTPException(status_code=400, 
-                        detail={
-                            'errorCode':206, 
-                            'errorMessage': '5th character must be a numeric',
-                            'tin': input
-                            }
-                        )
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": '5th character must be a numeric'
+            })
     if not input[5].isdigit():
-        raise HTTPException(status_code=400, 
-                        detail={
-                            'errorCode':207, 
-                            'errorMessage': '6th character must be a numeric',
-                            'tin': input
-                            }
-                        )
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": '6th character must be a numeric'
+            })
     if not input[6].isdigit():
-        raise HTTPException(status_code=400, 
-                        detail={
-                            'errorCode':208, 
-                            'errorMessage': '7th character must be a numeric',
-                            'tin': input
-                            }
-                        )
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": '7th character must be a numeric'
+            })
     if not input[7].isdigit():
-        raise HTTPException(status_code=400, 
-                        detail={
-                            'errorCode':209, 
-                            'errorMessage': '8th character must be a numeric',
-                            'tin': input
-                            }
-                        )
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": '8th character must be a numeric'
+            })
     if not input[8].isalpha():
-        raise HTTPException(status_code=400, 
-                        detail={
-                            'errorCode':301, 
-                            'errorMessage': '9th character must be a letter',
-                            'tin': input
-                            }
-                        )
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": '8th character must be a numeric'
+            })
      
-    return True 
+    return({
+            "tinNumber": input, 
+            "validStructure": True, 
+            "validSyntax": False,
+            }) 
 
 def checkC1F(input):
     valid = ['X','Y','Z','K','L','M']
@@ -214,13 +207,18 @@ def checkC1F(input):
             output=True
         
     if output == False:
-        raise HTTPException(status_code=400, 
-                            detail={
-                                'errorCode':218, 
-                                'errorMessage': '1st character must be X, Y, Z, K, L or M',
-                                'tin': input
-                                }
-                            ) 
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": '1st character must be X, Y, Z, K, L or M'
+            })
+    else:
+        return({
+            "tinNumber": input, 
+            "validStructure": True, 
+            "validSyntax": False,
+            }) 
 
 def checkDigitESF(input):
     conn = sqlite3.connect('spain.db')
@@ -242,12 +240,16 @@ def checkDigitESF(input):
     # print(input[8])
 
     if res == input[8]:
-        return True
+        return({
+            "tinNumber": input, 
+            "validStructure": True, 
+            "validSyntax": True,
+            })
     else:
-        raise HTTPException(status_code=400, 
-                            detail={
-                            'errorCode':301, 
-                            'errorMessage': 'Check Digit - failed',
-                            'tin': input
-                            })
+        return({
+            "tinNumber": input, 
+            "validStructure": True, 
+            "validSyntax": False,
+            "message": 'Check Digit - failed'
+            })
   

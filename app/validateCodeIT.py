@@ -193,49 +193,188 @@ def checkPosition(input):
 
 def validateCodeIT(input):
     if checkLength(input) == False:
-        raise HTTPException(status_code=400, 
-                        detail={
-                            'errorCode':200, 
-                            'errorMessage': 'Incorrect Length'
-                            }
-                        )   
-    elif checkPosition(input) == False:
-        raise HTTPException(status_code=400, 
-                        detail={
-                            'errorCode':200, 
-                            'errorMessage': 'Incorrect Length'
-                            }
-                        ) 
+        # raise HTTPException(status_code=400, 
+        #                 detail={
+        #                     'errorCode':200, 
+        #                     'errorMessage': 'Incorrect Length'
+        #                     }
+        #                 )
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": "Incorrect Length"            
+            })   
+    elif not input[0].isalpha():
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": "1st character must be a letter"            
+            })
+    elif not input[1].isalpha():
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": "2nd character must be a letter"            
+            })
+    elif not input[2].isalpha():
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": "3rd character must be a letter"            
+            })
+    elif not input[3].isalpha():
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": "4th character must be a letter"            
+            })
+    elif not input[4].isalpha():
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": "5th character must be a letter"            
+            })
+    elif not input[5].isalpha():
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": "1st character must be a letter"            
+            })
+    elif not input[6].isdigit():
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": "7th character must be a numeric"            
+            })
+    elif not input[7].isdigit():
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": "8th character must be a numeric"            
+            })
+    elif not input[8].isalpha():
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": "9th character must be a letter"            
+            })
+    elif not input[9].isdigit():
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": "10th character must be a numeric"            
+            })
+    elif not input[10].isdigit():
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": "11th character must be a numeric"            
+            })
+    elif not input[11].isalpha():
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": "12th character must be a letter"            
+            })
+    elif not input[12].isdigit():
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": "13th character must be a numeric"            
+            })
+    elif not input[13].isdigit():
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": "14th character must be a numeric"            
+            })
+    elif not input[14].isdigit():
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": "15th character must be a numeric"            
+            })
+    elif not input[15].isalpha():
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": "16th character must be a letter"            
+            }) 
     elif checkC9(input[8]) == False:
-        raise HTTPException(status_code=400, 
-                        detail={
-                            'errorCode':218, 
-                            'errorMessage': '9th character must represent a month'
-                            }
-                        ) 
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": "Incorrect Length"            
+            })
+        # raise HTTPException(status_code=400, 
+        #                 detail={
+        #                     'errorCode':218, 
+        #                     'errorMessage': '9th character must represent a month'
+        #                     }
+        #                 ) 
     elif checkC10C11(input[9:10]) == False:
-        raise HTTPException(status_code=400, 
-                        detail={
-                            'errorCode':219, 
-                            'errorMessage': '8th and 9th must be day of month()1...31 for men,41...71 for women'
-                            }
-                        ) 
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": "Incorrect Length"            
+            })
+        # raise HTTPException(status_code=400, 
+        #                 detail={
+        #                     'errorCode':219, 
+        #                     'errorMessage': '8th and 9th must be day of month()1...31 for men,41...71 for women'
+        #                     }
+        #                 ) 
     elif checkCode(input[11:15]) == False:
-        raise HTTPException(status_code=400, 
-                        detail={
-                            'errorCode':220, 
-                            'errorMessage': '12th to 15th - incorrect place of birth'
-                            }
-                        )
+        return({
+            "tinNumber": input, 
+            "validStructure": False, 
+            "validSyntax": False,
+            "message": "12th to 15th - incorrect place of birth"            
+            })
+        # raise HTTPException(status_code=400, 
+        #                 detail={
+        #                     'errorCode':220, 
+        #                     'errorMessage': '12th to 15th - incorrect place of birth'
+        #                     }
+        #                 )
     elif checkDigitIT(input) == False:
-        raise HTTPException(status_code=400, 
-                        detail={
-                            'errorCode':221, 
-                            'errorMessage': 'Check Digit - failed'
-                            }
-                        ) 
+        return({
+            "tinNumber": input, 
+            "validStructure": True, 
+            "validSyntax": False,
+            "message": "Check Digit failed"            
+            })
+        # raise HTTPException(status_code=400, 
+        #                 detail={
+        #                     'errorCode':221, 
+        #                     'errorMessage': 'Check Digit failed'
+        #                     }
+        #                 ) 
     else:
-        return True
+        return({
+            "tinNumber": input, 
+            "validStructure": True, 
+            "validSyntax": True            
+            })
 
 # print(validateCodeIT('DMLPRY77D15H501F'))
 # print(validateCodeIT('DMLPRY77D15H501F'))

@@ -14,3 +14,5 @@ uvicorn==0.11.2
 websockets==8.1
 wrapt==1.11.2
 pytest
+requests
+zeep

@@ -1,10 +1,11 @@
 # FastAPI object customization
-fastapi_title = "European Customs and Taxation APIs"
-fastapi_description = "ABC provides APIs in the area of Customs & Taxation."
-fastapi_version = "0.0.1"
-fastapi_openapi_url = "/custom_openapi.json"
-fastapi_docs_url = "/custom_docs"
-fastapi_redoc_url = "/custom_redoc"
+fastapi_title = "EU Tax API"
+# fastapi_description = "Confirms whether the structure of the TIN valid (types and number of characters).  It can also validate the syntax (i.e. algorithm/internal logic). It does NOT confirm the identity of a person nor whether the TIN actually exists or has been allocated."
+fastapi_description = "API for EU TAX - TIN and VAT"
+fastapi_version = "1.0.0"
+# fastapi_openapi_url = "/custom_openapi.json"
+# fastapi_docs_url = "/custom_docs"
+# fastapi_redoc_url = "/custom_redoc"
 
 # decorator custom elements
 # decorator_response_description = "Custom 200 message"
